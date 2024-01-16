@@ -9,7 +9,8 @@ export default class InteractionCreate extends Event {
 
   public async run(interaction: Interaction): Promise<any> {
     const client = interaction.client as CustomClient;
-    if (!interaction.isChatInputCommand() || !interaction.command?.guild) {
+
+    if (!interaction.isChatInputCommand()) {
       return;
     }
 
@@ -46,8 +47,8 @@ export default class InteractionCreate extends Event {
         ?.missing(command.userPermissions);
     }
 
-    if (missingPerms.bot || missingPerms.user) {
-      interaction.reply({
+    if (missingPerms.bot?.length || missingPerms.user?.length) {
+      return interaction.reply({
         content: `Missing Perms:\n
           ${missingPerms.user?.join(", ") || ""}
           ${missingPerms.bot?.join(", ") || ""}`,
@@ -56,6 +57,7 @@ export default class InteractionCreate extends Event {
     }
 
     try {
+      console.log("Running command: " + command.name);
       await command.exec(interaction);
     } catch (error) {
       console.error(error);
