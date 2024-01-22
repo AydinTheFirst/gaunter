@@ -1,14 +1,13 @@
-import { Message } from "discord.js";
-import Event from "../classes/Event";
-import { CustomClient } from "../types/types";
+import { Events, Message } from "discord.js";
+import Event from "@/classes/Event";
 
 export default class MessageCreate extends Event {
   public constructor() {
-    super("messageCreate");
+    super(Events.MessageCreate);
   }
 
   public async run(message: Message): Promise<void> {
-    const client = message.client as CustomClient;
+    const client = message.client;
     if (message.author.bot) return;
     if (!message.content.startsWith(client.prefix!)) return;
 

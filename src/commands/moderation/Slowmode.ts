@@ -4,7 +4,7 @@ import {
   TextChannel,
 } from "discord.js";
 import Command from "../../classes/Command";
-import { ICommand } from "../../types/types";
+import { ICommand } from "../../types";
 import ms from "ms";
 
 export default class Cmd extends Command {
@@ -12,6 +12,8 @@ export default class Cmd extends Command {
     super("slowmode", {
       category: "Moderation",
       description: "Enable or disable slowmode on a channel.",
+      botPermissions: ["ManageChannels"],
+      userPermissions: ["ManageChannels"],
       options: [
         {
           name: "time",

@@ -1,12 +1,14 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import Command from "../../classes/Command";
-import { ICommand } from "../../types/types";
+import { ICommand } from "../../types";
 
 export default class Cmd extends Command {
   public constructor() {
     super("role", {
       category: "Moderation",
       description: "Changes role of a member",
+      botPermissions: ["ManageRoles"],
+      userPermissions: ["ManageRoles"],
       options: [
         {
           name: "member",

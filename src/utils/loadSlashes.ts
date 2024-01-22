@@ -1,8 +1,8 @@
+import { Client } from "discord.js";
 import { REST, Routes } from "discord.js";
-import { CustomClient } from "../types/types";
 
 export default class SlashCommandLoader {
-  public constructor(private client: CustomClient) {}
+  public constructor(private client: Client) {}
 
   public async load(): Promise<void> {
     const rest = new REST().setToken(this.client.token!);
@@ -27,7 +27,7 @@ export default class SlashCommandLoader {
       console.log(
         `Successfully reloaded ${data.length} application (/) commands.`
       );
-    } catch (error) {
+    } catch (error: any) {
       // And of course, make sure you catch and log any errors!
       console.error(JSON.stringify(error.rawError));
     }

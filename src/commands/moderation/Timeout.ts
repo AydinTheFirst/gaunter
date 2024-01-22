@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import Command from "../../classes/Command";
-import { ICommand } from "../../types/types";
+import { ICommand } from "../../types";
 import ms from "ms";
 
 export default class Cmd extends Command {
@@ -8,6 +8,8 @@ export default class Cmd extends Command {
     super("timeout", {
       category: "Moderation",
       description: "Timeouts a member",
+      botPermissions: ["ManageRoles"],
+      userPermissions: ["ManageRoles"],
       options: [
         {
           name: "member",

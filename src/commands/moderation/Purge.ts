@@ -5,7 +5,7 @@ import {
 } from "discord.js";
 
 import Command from "../../classes/Command";
-import { ICommand } from "../../types/types";
+import { ICommand } from "../../types";
 
 export default class Cmd extends Command {
   public constructor() {
@@ -13,6 +13,8 @@ export default class Cmd extends Command {
       aliases: ["purge"],
       category: "Moderation",
       description: "Cleans up channel messages.",
+      botPermissions: ["ManageMessages"],
+      userPermissions: ["ManageMessages"],
       options: [
         {
           name: "member",

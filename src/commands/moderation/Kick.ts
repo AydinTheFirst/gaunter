@@ -1,12 +1,14 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import Command from "../../classes/Command";
-import { ICommand } from "../../types/types";
+import { ICommand } from "../../types";
 
 export default class Cmd extends Command {
   public constructor() {
     super("kick", {
       category: "Moderation",
       description: "Kicks a member",
+      botPermissions: ["KickMembers"],
+      userPermissions: ["KickMembers"],
       options: [
         {
           name: "member",

@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 import Command from "../../classes/Command";
-import { CustomClient, ICommand } from "../../types/types";
+import { CustomClient, ICommand } from "../../types";
 
 export default class Cmd extends Command {
   public constructor() {

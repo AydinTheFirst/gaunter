@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import Command from "../../classes/Command";
-import { ICommand } from "../../types/types";
+import { ICommand } from "../../types";
 import { shortenURL } from "../../utils/lynx";
 
 export default class Cmd extends Command {
@@ -29,7 +29,7 @@ export default class Cmd extends Command {
         `Successfully shortened ${dest} to ${res.result.slug}\n\n[Click here](${res.url})`
       );
       cmd.reply({ embeds: [embed] });
-    } catch (error) {
+    } catch (error: any) {
       const err = error.response.data.message;
       cmd.reply({
         content: `An error occured: ${err}`,

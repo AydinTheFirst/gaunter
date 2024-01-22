@@ -1,12 +1,14 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import Command from "../../classes/Command";
-import { ICommand } from "../../types/types";
+import { ICommand } from "../../types";
 
 export default class Cmd extends Command {
   public constructor() {
     super("setnick", {
       category: "Moderation",
       description: "Changes a member's nickname",
+      botPermissions: ["ManageNicknames"],
+      userPermissions: ["ManageNicknames"],
       options: [
         {
           name: "member",

@@ -1,18 +1,24 @@
 import "dotenv/config";
 import fs from "fs";
 import Discord from "discord.js";
-import { CustomClient } from "./types/types";
-import "./utils/lynx";
 
-const client: CustomClient = new Discord.Client({
+// Import externals
+import "./utils/lynx";
+import "./mongodb/mongoose";
+import "./express";
+import { Logger } from "./utils/Logger";
+import config from "./config";
+
+const client = new Discord.Client({
   intents: [new Discord.IntentsBitField("3276799")],
   partials: [Discord.Partials.Channel],
 });
 
 client.commands = new Discord.Collection();
-client.prefix = "$";
+client.prefix = config.prefix;
 client.prod = process.env.NODE_ENV === "production";
-client.devGuild = "1175490181088940032";
+client.devGuild = config.guildId;
+client.logger = new Logger();
 
 const eventFiles = fs
   .readdirSync("./src/events")

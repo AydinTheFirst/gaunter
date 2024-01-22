@@ -1,7 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 import Command from "../../classes/Command";
-import { ICommand } from "../../types/types";
-import { inviteLink } from "../../config";
+import { ICommand } from "../../types";
+import config from "../../config";
 
 // Returns bot information
 export default class Cmd extends Command {
@@ -19,7 +19,7 @@ export default class Cmd extends Command {
     embed.addFields([
       {
         name: "Bot Name",
-        value: "Roach Rover",
+        value: config.botFullName,
       },
       {
         name: "Bot Version",
@@ -35,11 +35,13 @@ export default class Cmd extends Command {
       },
       {
         name: "Bot Source Code",
-        value: "[GitHub](https://github.com/AydinTheFirst/roach-rover",
+        value: `[GitHub](${config.github})`,
+        inline: true,
       },
       {
         name: "Bot Invite",
-        value: `[Invite](${inviteLink})`,
+        value: `[Invite](${config.inviteLink})`,
+        inline: true,
       },
     ]);
 
