@@ -1,8 +1,4 @@
-import {
-  APIApplicationCommand,
-  BitFieldResolvable,
-  PermissionsString,
-} from "discord.js";
+import { APIApplicationCommand, PermissionsString } from "discord.js";
 
 import { ICommand } from "../types";
 export interface CommandOptions {
@@ -10,8 +6,8 @@ export interface CommandOptions {
   category?: string;
   description?: string;
   disabled?: boolean;
-  botPermissions?: BitFieldResolvable<PermissionsString, bigint>[];
-  userPermissions?: BitFieldResolvable<PermissionsString, bigint>[];
+  botPermissions?: PermissionsString[];
+  userPermissions?: PermissionsString[];
   options?: APIApplicationCommand["options"];
 }
 
@@ -22,8 +18,8 @@ export default class Command implements CommandOptions {
   public description: string;
   public disabled: boolean;
   public options?: CommandOptions["options"];
-  public botPermissions?: BitFieldResolvable<PermissionsString, bigint>[];
-  public userPermissions?: BitFieldResolvable<PermissionsString, bigint>[];
+  public botPermissions?: PermissionsString[];
+  public userPermissions?: PermissionsString[];
   public constructor(name: string, options: CommandOptions) {
     this.name = name;
     this.aliases = options.aliases || [];

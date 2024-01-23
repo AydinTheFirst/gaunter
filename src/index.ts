@@ -4,7 +4,7 @@ import Discord from "discord.js";
 
 // Import externals
 import "./utils/lynx";
-import "./mongodb/mongoose";
+import "./mongodb";
 import "./express";
 import { Logger } from "./utils/Logger";
 import config from "./config";
@@ -46,4 +46,12 @@ for (const category of commandCategories) {
   }
 }
 
-client.login(process.env.DISCORD_TOKEN);
+process.on("unhandledRejection", (error) => {
+  console.error(error);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error(error);
+});
+
+await client.login(process.env.DISCORD_TOKEN);

@@ -4,11 +4,10 @@ import {
   ButtonInteraction,
   ButtonStyle,
   ChannelType,
-  ColorResolvable,
   EmbedBuilder,
 } from "discord.js";
 
-import { findOrCreateGuild } from "../mongodb/mongoose";
+import { findOrCreateGuild } from "../mongodb";
 import { Client } from "discord.js";
 
 export const buttonHandler = async (
@@ -25,28 +24,13 @@ export const buttonHandler = async (
 };
 
 export const closeTicketHandler = async (
-  client: CustomClient,
+  _: any,
   interaction: ButtonInteraction
 ) => {
   const db = await findOrCreateGuild(interaction.guildId!);
-  const ticketCh = db.ticket.cache.find(
-    (c) => c.channel === interaction.channel!.id
-  );
 
-  const ticketChannel = interaction.guild?.channels.cache.get(
-    ticketCh!.channel
-  );
-
-  if (!ticketChannel) {
-    return interaction.reply({
-      content: `This channel is not a ticket!`,
-      ephemeral: true,
-    });
-  }
-
-  db.ticket.cache = db.ticket.cache.filter(
-    (c) => c.channel !== ticketChannel.id
-  );
+  const channel = interaction.channel!;
+  db.ticket.cache = db.ticket.cache.filter((c) => c.channel !== channel.id);
 
   await db.save();
 
@@ -56,20 +40,22 @@ export const closeTicketHandler = async (
   });
 
   setTimeout(() => {
-    ticketChannel.delete();
-  }, 5000);
+    channel.delete();
+  }, 3000);
 };
 
 export const createTicketHandler = async (
-  client: CustomClient,
+  _: any,
   interaction: ButtonInteraction
 ) => {
   const db = await findOrCreateGuild(interaction.guildId!);
-  const ticketCh = db.ticket.cache.find((c) => c.user === interaction.user.id);
+  const activeTicket = db.ticket.cache.find(
+    (c) => c.user === interaction.user.id
+  );
 
-  if (ticketCh) {
+  if (activeTicket) {
     return interaction.reply({
-      content: `You already have a ticket open! at <#${ticketCh.channel}>`,
+      content: `You already have a ticket open! at <#${activeTicket.channel}>`,
       ephemeral: true,
     });
   }
@@ -95,7 +81,7 @@ export const createTicketHandler = async (
   }
 
   const ticketChannel = await interaction.guild?.channels.create({
-    name: `ticket-${1000 + db.ticket.cache.length + 1}`,
+    name: `ticket-${1000 + db.ticket.count + 1}`,
     parent: ticketCategory!.id,
     permissionOverwrites: [
       {
@@ -114,20 +100,19 @@ export const createTicketHandler = async (
     user: interaction.user.id,
   });
 
+  db.ticket.count++;
+
   await db.save();
 
   const embed = new EmbedBuilder();
-  embed.setTitle(
-    db.ticket.message.title || `${interaction.guild?.name}'s Support`
-  );
+  embed.setTitle(`${interaction.guild?.name}'s Support`);
   embed.setDescription(
-    db.ticket.message.description ||
-      "Support will be with you shortly.\nTo close this ticket react with 🔒"
+    "Support will be with you shortly.\nTo close this ticket react with 🔒"
   );
-  embed.setColor((db.ticket.message.color as ColorResolvable) || "Random");
+  embed.setColor("Random");
 
   const button = new ButtonBuilder();
-  button.setLabel(db.ticket.message.label || `Close Ticket`);
+  button.setLabel(`Close Ticket`);
   button.setCustomId("ticketClose");
   button.setStyle(ButtonStyle.Danger);
   button.setEmoji("🔒");

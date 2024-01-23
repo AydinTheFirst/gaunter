@@ -1,5 +1,5 @@
 import Event from "../classes/Event";
-import { Events, Interaction, TextChannel } from "discord.js";
+import { Client, Events, Interaction, TextChannel } from "discord.js";
 import { ICommand } from "@/types";
 import { buttonHandler } from "@/utils/tickets";
 
@@ -29,7 +29,7 @@ export default class InteractionCreate extends Event {
   }
 }
 
-const commandHandler = async (client: CustomClient, interaction: ICommand) => {
+const commandHandler = async (client: Client, interaction: ICommand) => {
   const command = client.commands?.get(interaction.commandName);
 
   if (!command) return;

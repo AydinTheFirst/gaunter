@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 import Command from "../../classes/Command";
-import { CustomClient, ICommand } from "../../types";
+import { ICommand } from "../../types";
 
 export default class Cmd extends Command {
   public constructor() {
@@ -11,7 +11,7 @@ export default class Cmd extends Command {
   }
 
   public async exec(cmd: ICommand): Promise<void> {
-    const client = cmd.client as CustomClient;
+    const client = cmd.client;
     const embed = new EmbedBuilder();
     embed.setTitle("Help");
 

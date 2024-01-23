@@ -10,7 +10,7 @@ import { ICommand } from "../../types";
 export default class Cmd extends Command {
   public constructor() {
     super("ticket-create", {
-      category: "Tickets",
+      category: "Config",
       description: "Creates a ticket",
       botPermissions: ["ManageChannels"],
       userPermissions: ["ManageChannels"],

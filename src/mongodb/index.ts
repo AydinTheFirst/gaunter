@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { guildModel } from "./guild-schema";
+import { guildModel } from "./guildSchema";
 
 try {
   await mongoose.connect(process.env.mongodb!);

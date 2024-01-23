@@ -9,6 +9,7 @@ export class Logger {
   }
 
   public log(message: string): void {
+    console.log(message);
     const embed = new EmbedBuilder();
     embed.setTitle("Log");
     embed.setDescription(message);
@@ -18,6 +19,7 @@ export class Logger {
   }
 
   public error(message: string): void {
+    console.error(message);
     const embed = new EmbedBuilder();
     embed.setTitle("Error");
     embed.setDescription(message);
@@ -27,6 +29,7 @@ export class Logger {
   }
 
   public warn(message: string): void {
+    console.warn(message);
     const embed = new EmbedBuilder();
     embed.setTitle("Warn");
     embed.setDescription(message);
